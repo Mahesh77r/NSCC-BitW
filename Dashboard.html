@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Leaderboard</title>
+  </head>
+  <body>
+    <div class="output"></div>
+
+    <script>
+      const url =
+        "https://docs.google.com/spreadsheets/d/1zYNz47_fk_OgLl6sw3ZXpeGv0FPYe9ICkfuoAedUlzk/gviz/tq?";
+      const output = document.querySelector(".output");
+
+      fetch(url)
+        .then((res) => res.text())
+        .then((raw) => {
+          const data = JSON.parse(raw.substr(47).slice(0, -2));
+          const row = document.createElement("tr");
+          output.append(row);
+
+
+
+          data.table.cols.forEach((heading) => {
+          
+          const cell = document.createElement("td");
+          cell.textContent = heading.label;
+          row.append(cell);
+          });
+
+          data.table.rows.forEach((main) => {
+          const container = document.createElement("tr");
+          output.append(container);
+          
+          main.c.forEach((ele)=>{
+          const cell = document.createElement("td");
+          cell.textContent = ele.v;
+          container.append(cell);
+          })
+          
+          
+          });
+          // console.log(data);
+        });
+    </script>
+  </body>
+</html>
